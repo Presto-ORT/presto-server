@@ -17,6 +17,13 @@ router.get('/:id', function (req, res, next) {
     res.send('Get a record');
 });
 
+router.delete('/:id', function (req, res, next) {
+    //recibo un id
+    //si lo encuentro lo borro
+    //si no devuelve un error
+    res.send('Get a record');
+});
+
 function authorization(req, res, next) {
     // validar token de usuario
     // si no esta ok, dar error
