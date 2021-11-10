@@ -20,4 +20,6 @@ router.get('/:id', async function (req, res, next) {
     res.json(category);
 });
 
+//Comentario para PR
+
 module.exports = router;
