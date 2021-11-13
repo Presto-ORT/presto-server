@@ -7,7 +7,7 @@ router.get('/', async function (req, res, next) {
         let records = await recordsController.getAllRecords();
         res.json(records);
     } catch (error) {
-        return res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+        res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
 
@@ -19,9 +19,9 @@ router.post('/', async function (req, res, next) {
         let saved = await recordsController.addNewRecord(record);
         if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
 
-        return res.status(201).send('Registro creado');
+        res.status(201).send('Registro creado');
     } catch (error) {
-        return res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+        res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
 
