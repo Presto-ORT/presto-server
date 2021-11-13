@@ -4,4 +4,8 @@ const getAllCategories = () => {
     return categoriesDB.getAllCategories()
 }
 
-module.exports = { getAllCategories };
+const getCategoryById = (id) => {
+    return categoriesDB.getCategoryById(id);
+}
+
+module.exports = { getAllCategories, getCategoryById };
