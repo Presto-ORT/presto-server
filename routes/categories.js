@@ -29,6 +29,4 @@ router.get('/:id', async function (req, res, next) {
     }
 });
 
-//Comentario para PR
-
 module.exports = router;
