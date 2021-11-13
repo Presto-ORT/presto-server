@@ -1,13 +1,28 @@
 const express = require('express');
 const router = express.Router();
+const recordsController = require('../controllers/recordsController')
 
-router.get('/', function (req, res, next) {
-    res.send('respond with all records');
+router.get('/', async function (req, res, next) {
+    try {
+        let records = await recordsController.getAllRecords();
+        res.json(records);
+    } catch (error) {
+        return res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+    }
 });
 
-router.post('/', function (req, res, next) {
-    // recibo importe, categoria, subcat, fecha, descripcion
-    res.send('Create a record');
+router.post('/', async function (req, res, next) {
+    try {
+        let { record } = req.body;
+        if (!record) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
+
+        let saved = await recordsController.addNewRecord(record);
+        if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
+
+        return res.status(201).send('Registro creado');
+    } catch (error) {
+        return res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+    }
 });
 
 router.get('/:id', function (req, res, next) {
