@@ -2,9 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const categoriesDB = require('../data/categories');
+const categoriesController = require('../controllers/categoriesController');
 
 router.get('/', async function (req, res, next) {
-    const categories = await categoriesDB.getAllCategories();
+    const categories = await categoriesController.getAllCategories();
     if (!categories.length === 0) return res.status(404).json({ error: "No encontrado", description: "No se encontro ninguna categoria" });
 
     res.json(categories);
