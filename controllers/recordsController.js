@@ -16,4 +16,8 @@ const updateRecord = (id, updatedRecord) => {
     return recordsDB.updateRecord(id, updatedRecord);
 }
 
-module.exports = { getAllRecords, addNewRecord, getRecordById, updateRecord }
+const deleteRecord = (id) => {
+    return recordsDB.deleteRecord(id);
+}
+
+module.exports = { getAllRecords, addNewRecord, getRecordById, updateRecord, deleteRecord }
