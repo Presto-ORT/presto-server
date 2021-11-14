@@ -35,6 +35,18 @@ async function addNewRecord(newRecord) {
     return record;
 }
 
+async function updateRecord(id, updatedRecord) {
+    const connectiondb = await conn.getConnection();
+
+    const record = await connectiondb
+        .db(DATABASE)
+        .collection(RECORDS)
+        .updateOne({ _id: new ObjectId(id) },
+            { $set: updateRecord });
+
+    return record;
+}
+
 async function deleteRecord(id) {
     const connectiondb = await conn.getConnection();
 
@@ -47,4 +59,4 @@ async function deleteRecord(id) {
 }
 
 
-module.exports = { getAllRecords, getRecordById, addNewRecord };
+module.exports = { getAllRecords, getRecordById, addNewRecord, updateRecord };
