@@ -27,12 +27,9 @@ router.post('/', async function (req, res, next) {
 
 router.get('/:id', function (req, res, next) {
     try {
-        // recibo id
         let { id } = req.params
         if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
 
-        // si encuentro gasto, lo mando
-        // sino, respondo error
         let record = recordsController.getRecordById(id);
         if (!record) return res.status(404).json({ error: "Error", description: "Registro no encontrado" });
 
