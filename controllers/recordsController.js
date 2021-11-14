@@ -12,4 +12,8 @@ const addNewRecord = (newRecord) => {
     return recordsDB.addNewRecord(newRecord);
 }
 
-module.exports = { getAllRecords, addNewRecord, getRecordById }
+const updateRecord = (id, updatedRecord) => {
+    return recordsDB.updateRecord(id, updatedRecord);
+}
+
+module.exports = { getAllRecords, addNewRecord, getRecordById, updateRecord }
