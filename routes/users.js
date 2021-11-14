@@ -30,18 +30,22 @@ router.post('/register', async function (req, res, next) {
 });
 
 router.post('/login', async function (req, res, next) {
-  let { email, password } = req.body;
+  try {
+    let { email, password } = req.body;
 
-  let user = await usersController.getUserByEmail(email);
-  if (!user) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
+    let user = await usersController.getUserByEmail(email);
+    if (!user) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
 
-  let match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
+    let match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
 
-  // TODO: Agregar JWT y enviarlo en la response
-  delete user.password
+    // TODO: Agregar JWT y enviarlo en la response
+    delete user.password
 
-  res.json(user);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+  }
 });
 
 module.exports = router;
