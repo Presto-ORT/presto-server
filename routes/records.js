@@ -47,7 +47,7 @@ router.put('/:id', async function (req, res, next) {
         let updatedRecord = req.body.record;
         if (!updatedRecord) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
 
-        let record = recordsController.getRecordById(id);
+        let record = await recordsController.getRecordById(id);
         if (!record) return res.status(404).json({ error: "Error", description: "Registro no encontrado" });
 
         let updated = await recordsController.updateRecord(id, updatedRecord);
