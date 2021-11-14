@@ -25,7 +25,7 @@ router.post('/', async function (req, res, next) {
     }
 });
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', async function (req, res, next) {
     try {
         let { id } = req.params
         if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
@@ -38,6 +38,28 @@ router.get('/:id', function (req, res, next) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
+
+router.put('/:id', async function (req, res, next) {
+    try {
+        let { id } = req.params;
+        if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
+
+        let updatedRecord = req.body.record;
+        if (!updatedRecord) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
+
+        let record = recordsController.getRecordById(id);
+        if (!record) return res.status(404).json({ error: "Error", description: "Registro no encontrado" });
+
+        let updated = await recordsController.updateRecord(id, updatedRecord);
+        console.log(updated.modifiedCount);
+        if (!updated || updated.modifiedCount === 0) return res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+
+        res.json({});
+    } catch (error) {
+        res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+    }
+});
+
 
 router.delete('/:id', function (req, res, next) {
     //recibo un id
