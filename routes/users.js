@@ -19,7 +19,9 @@ router.post('/register', async function (req, res, next) {
     console.log(password);
 
     let saved = await usersController.addNewUser({ name, email, password });
-    if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
+    if (!saved.insertedId) return res.status(500).json({ error: 'Error' });
+
+    // TODO: Agregar JWT y enviarlo en la response
 
     res.status(201).send('Registro creado');
   } catch (error) {
@@ -27,12 +29,19 @@ router.post('/register', async function (req, res, next) {
   }
 });
 
-router.get('/login', function (req, res, next) {
-  // recibimos mail y contraseña
-  // validamos contraseña
-  // si esta todo ok, generamos token
-  // sino, respondemos error
-  res.json({});
+router.post('/login', async function (req, res, next) {
+  let { email, password } = req.body;
+
+  let user = await usersController.getUserByEmail(email);
+  if (!user) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
+
+  let match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
+
+  // TODO: Agregar JWT y enviarlo en la response
+  delete user.password
+
+  res.json(user);
 });
 
 module.exports = router;
