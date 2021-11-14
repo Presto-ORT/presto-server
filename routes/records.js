@@ -26,10 +26,20 @@ router.post('/', async function (req, res, next) {
 });
 
 router.get('/:id', function (req, res, next) {
-    // recibo id
-    // si encuentro gasto, lo mando
-    // sino, respondo error
-    res.send('Get a record');
+    try {
+        // recibo id
+        let { id } = req.params
+        if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
+
+        // si encuentro gasto, lo mando
+        // sino, respondo error
+        let record = recordsController.getRecordById(id);
+        if (!record) return res.status(404).json({ error: "Error", description: "Registro no encontrado" });
+
+        res.json(record);
+    } catch (error) {
+        res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+    }
 });
 
 router.delete('/:id', function (req, res, next) {
