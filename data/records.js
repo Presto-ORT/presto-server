@@ -59,4 +59,4 @@ async function deleteRecord(id) {
 }
 
 
-module.exports = { getAllRecords, getRecordById, addNewRecord, updateRecord };
+module.exports = { getAllRecords, getRecordById, addNewRecord, updateRecord, deleteRecord };
