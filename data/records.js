@@ -42,7 +42,7 @@ async function updateRecord(id, updatedRecord) {
         .db(DATABASE)
         .collection(RECORDS)
         .updateOne({ _id: new ObjectId(id) },
-            { $set: updateRecord });
+            { $set: updatedRecord });
 
     return record;
 }
