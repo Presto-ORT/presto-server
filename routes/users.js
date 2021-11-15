@@ -10,7 +10,11 @@ router.get('/', function (req, res, next) {
 router.post('/register', async function (req, res, next) {
   try {
     let { name, email, password } = req.body;
-    email = email.toLoweCase();
+    name = name.trim();
+    email = email.toLowerCase().trim();
+    password = password.trim();
+
+    console.log(name, email, password);
 
     let user = await usersController.getUserByEmail(email);
     if (user) return res.status(400).json({ error: "Error", description: "El usuario ya existe, por favor ingrese otro email" });
@@ -20,10 +24,9 @@ router.post('/register', async function (req, res, next) {
 
     let saved = await usersController.addNewUser({ name, email, password });
     if (!saved.insertedId) return res.status(500).json({ error: 'Error' });
-
     // TODO: Agregar JWT y enviarlo en la response
 
-    res.status(201).send('Registro creado');
+    res.status(201).json({ _id: saved.insertedId, name, email });
   } catch (error) {
     res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
   }
