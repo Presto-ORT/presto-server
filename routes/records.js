@@ -5,6 +5,8 @@ const recordsController = require('../controllers/recordsController')
 router.get('/', async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords();
+        if (!records) return res.status(404).json({ error: "Error", description: "No se encontro ningun registro." });
+
         res.json(records);
     } catch (error) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
@@ -58,7 +60,6 @@ router.put('/:id', async function (req, res, next) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
-
 
 router.delete('/:id', async function (req, res, next) {
     let { id } = req.params;
