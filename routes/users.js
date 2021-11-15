@@ -32,6 +32,8 @@ router.post('/register', async function (req, res, next) {
 router.post('/login', async function (req, res, next) {
   try {
     let { email, password } = req.body;
+    email = email.toLowerCase().trim();
+    password = password.trim();
 
     let user = await usersController.getUserByEmail(email);
     if (!user) return res.status(404).json({ error: "Error", description: "Usuario o contraseña incorrecto" });
