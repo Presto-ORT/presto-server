@@ -4,9 +4,60 @@ const jwt = require('jsonwebtoken');
 const recordsController = require('../controllers/recordsController');
 const usersController = require('../controllers/usersController');
 
+
+////////////////////////////////////////////////
+///     VERSION CON HARDCODEO PARA PRUEBAS  ////
+///     BORRAR PARA ENTREGA                 ////
+////////////////////////////////////////////////
+
+/* router.get('/', async function (req, res, next) {
+    try {
+        let records = await recordsController.getAllRecords("618b03e7c8af93f7b59ef372");
+        
+        const {day, month, year} = req.query;
+
+        if(day && month && year){  
+            
+            return res.json(records.filter((elem) => {
+                
+                data = new Date(elem.date)
+                
+                return  data.getDate() == day &&
+                        data.getMonth() == month - 1 &&
+                        data.getFullYear() == year                  
+                
+            }                                       
+            ));
+        }
+
+        res.json(records);
+    } catch (error) {
+        res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+    }
+}); */
+
+////////////////////////////////////////////////
+///     VERSION CORRECTA                    ////
+////////////////////////////////////////////////
+
 router.get('/', authorization, async function (req, res, next) {
     try {
-        let records = await recordsController.getAllRecords(req.user.id);
+        let records = await recordsController.getAllRecords(id);
+        
+        const {day, month, year} = req.query;
+
+        if(day && month && year){          
+            
+            return res.json(records.filter((elem) => {
+                
+                data = new Date(elem.date)
+                
+                return  data.getDate() == day &&
+                        data.getMonth() == month - 1 &&
+                        data.getFullYear() == year
+            }                                       
+            ));
+        }
 
         res.json(records);
     } catch (error) {
