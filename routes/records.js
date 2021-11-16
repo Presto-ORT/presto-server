@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const recordsController = require('../controllers/recordsController')
+const jwt = require('jsonwebtoken');
+const recordsController = require('../controllers/recordsController');
+const usersController = require('../controllers/usersController');
 
-router.get('/', async function (req, res, next) {
+router.get('/', authorization, async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords();
         if (!records) return res.status(404).json({ error: "Error", description: "No se encontro ningun registro." });
@@ -13,10 +15,12 @@ router.get('/', async function (req, res, next) {
     }
 });
 
-router.post('/', async function (req, res, next) {
+router.post('/', authorization, async function (req, res, next) {
     try {
         let { record } = req.body;
         if (!record) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
+
+        record.user = req.user._id;
 
         let saved = await recordsController.addNewRecord(record);
         if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
@@ -27,7 +31,7 @@ router.post('/', async function (req, res, next) {
     }
 });
 
-router.get('/:id', async function (req, res, next) {
+router.get('/:id', authorization, async function (req, res, next) {
     try {
         let { id } = req.params
         if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
@@ -41,7 +45,7 @@ router.get('/:id', async function (req, res, next) {
     }
 });
 
-router.put('/:id', async function (req, res, next) {
+router.put('/:id', authorization, async function (req, res, next) {
     try {
         let { id } = req.params;
         if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
@@ -61,7 +65,7 @@ router.put('/:id', async function (req, res, next) {
     }
 });
 
-router.delete('/:id', async function (req, res, next) {
+router.delete('/:id', authorization, async function (req, res, next) {
     let { id } = req.params;
     if (!id) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
 
@@ -74,10 +78,19 @@ router.delete('/:id', async function (req, res, next) {
     res.status(204).send({});
 });
 
-function authorization(req, res, next) {
-    // validar token de usuario
-    // si no esta ok, dar error
-    // sino guardar user en request
+async function authorization(req, res, next) {
+    if (req.headers["authorization"]) {
+        let token = jwt.decode(req.headers["authorization"].replace("Bearer ", ""))
+        let user = await usersController.getUserById(token._id);
+        if (!user) {
+            res.status(401).json({})
+        } else {
+            req.user = user;
+            next();
+        }
+    } else {
+        res.status(401).json({})
+    }
     next();
 }
 
