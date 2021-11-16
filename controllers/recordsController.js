@@ -1,7 +1,7 @@
 const recordsDB = require('../data/records');
 
-const getAllRecords = () => {
-    return recordsDB.getAllRecords();
+const getAllRecords = (id) => {
+    return recordsDB.getAllRecords(id);
 };
 
 const getRecordById = (id) => {
