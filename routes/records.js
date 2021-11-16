@@ -6,8 +6,7 @@ const usersController = require('../controllers/usersController');
 
 router.get('/', authorization, async function (req, res, next) {
     try {
-        let records = await recordsController.getAllRecords();
-        if (!records) return res.status(404).json({ error: "Error", description: "No se encontro ningun registro." });
+        let records = await recordsController.getAllRecords(req.user.id);
 
         res.json(records);
     } catch (error) {
