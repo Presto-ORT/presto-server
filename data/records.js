@@ -4,12 +4,12 @@ const DATABASE = 'prestoDB';
 const RECORDS = 'records';
 
 
-async function getAllRecords() {
+async function getAllRecords(id) {
     const connectiondb = await conn.getConnection();
     const records = await connectiondb
         .db(DATABASE)
         .collection(RECORDS)
-        .find()
+        .find({ user: new ObjectId(id) })
         .toArray();
     return records;
 }
