@@ -17,7 +17,7 @@ router.post('/register', async function (req, res, next) {
     email = email.toLowerCase().trim();
     password = password.trim();
 
-    console.log(name, email, password);
+    // console.log(name, email, password);
 
     let user = await usersController.getUserByEmail(email);
     if (user) return res.status(400).json({ error: "Error", description: "El usuario ya existe, por favor ingrese otro email" });
