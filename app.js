@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -12,6 +13,10 @@ const categoriesRouter = require('./routes/categories');
 const app = express();
 
 // view engine setup
+app.options("*", cors({ origin: 'http://localhosdt:19006', optionsSuccessStatus: 200}));
+app.use(cors({ origin: 'http://localhost:19002', optionsSuccessStatus: 200}));
+/// CORS
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

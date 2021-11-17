@@ -10,7 +10,7 @@ const usersController = require('../controllers/usersController');
 ///     BORRAR PARA ENTREGA                 ////
 ////////////////////////////////////////////////
 
-/* router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords("618b03e7c8af93f7b59ef372");
         
@@ -34,13 +34,13 @@ const usersController = require('../controllers/usersController');
     } catch (error) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
-}); */
+});
 
 ////////////////////////////////////////////////
 ///     VERSION CORRECTA                    ////
 ////////////////////////////////////////////////
 
-router.get('/', authorization, async function (req, res, next) {
+/* router.get('/', authorization, async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords(id);
         
@@ -63,7 +63,7 @@ router.get('/', authorization, async function (req, res, next) {
     } catch (error) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
-});
+}); */
 
 router.post('/', authorization, async function (req, res, next) {
     try {
