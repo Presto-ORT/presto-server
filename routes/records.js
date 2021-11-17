@@ -42,20 +42,20 @@ const usersController = require('../controllers/usersController');
 
 router.get('/', authorization, async function (req, res, next) {
     try {
-        let records = await recordsController.getAllRecords(id);
-        
-        const {day, month, year} = req.query;
+        let records = await recordsController.getAllRecords(req.user._id);
 
-        if(day && month && year){          
-            
+        const { day, month, year } = req.query;
+
+        if (day && month && year) {
+
             return res.json(records.filter((elem) => {
-                
+
                 data = new Date(elem.date)
-                
-                return  data.getDate() == day &&
-                        data.getMonth() == month - 1 &&
-                        data.getFullYear() == year
-            }                                       
+
+                return data.getDate() == day &&
+                    data.getMonth() == month - 1 &&
+                    data.getFullYear() == year
+            }
             ));
         }
 
