@@ -13,20 +13,20 @@ const usersController = require('../controllers/usersController');
 router.get('/', async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords("618b03e7c8af93f7b59ef372");
-        
-        const {day, month, year} = req.query;
 
-        if(day && month && year){  
-            
+        const { day, month, year } = req.query;
+
+        if (day && month && year) {
+
             return res.json(records.filter((elem) => {
-                
+
                 data = new Date(elem.date)
-                
-                return  data.getDate() == day &&
-                        data.getMonth() == month - 1 &&
-                        data.getFullYear() == year                  
-                
-            }                                       
+
+                return data.getDate() == day &&
+                    data.getMonth() == month - 1 &&
+                    data.getFullYear() == year
+
+            }
             ));
         }
 
@@ -141,7 +141,6 @@ async function authorization(req, res, next) {
     } else {
         res.status(401).json({})
     }
-    next();
 }
 
 module.exports = router;
