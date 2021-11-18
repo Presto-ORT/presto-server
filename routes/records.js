@@ -23,7 +23,7 @@ router.get('/', async function (req, res, next) {
                 data = new Date(elem.date)
 
                 return data.getDate() == day &&
-                    data.getMonth() == month - 1 &&
+                    data.getMonth() == month &&
                     data.getFullYear() == year
 
             }
@@ -65,12 +65,12 @@ router.get('/', async function (req, res, next) {
     }
 }); */
 
-router.post('/', authorization, async function (req, res, next) {
+router.post('/', async function (req, res, next) {
     try {
         let { record } = req.body;
         if (!record) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
 
-        record.user = req.user._id;
+        record.user = "618b03e7c8af93f7b59ef372";
 
         let saved = await recordsController.addNewRecord(record);
         if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
