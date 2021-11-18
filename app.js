@@ -14,7 +14,7 @@ const reportsRouter = require('./routes/reports');
 const app = express();
 
 // view engine setup
-app.options("*", cors({ origin: 'http://localhosdt:19006', optionsSuccessStatus: 200 }));
+app.options("*", cors({ origin: 'http://localhost:19002', optionsSuccessStatus: 200 }));
 app.use(cors({ origin: 'http://localhost:19002', optionsSuccessStatus: 200 }));
 /// CORS
 

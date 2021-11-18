@@ -10,7 +10,7 @@ const usersController = require('../controllers/usersController');
 ///     BORRAR PARA ENTREGA                 ////
 ////////////////////////////////////////////////
 
-router.get('/', async function (req, res, next) {
+/* router.get('/', async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords("618b03e7c8af93f7b59ef372");
 
@@ -34,13 +34,13 @@ router.get('/', async function (req, res, next) {
     } catch (error) {
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
-});
+}); */
 
 ////////////////////////////////////////////////
 ///     VERSION CORRECTA                    ////
 ////////////////////////////////////////////////
 
-/* router.get('/', authorization, async function (req, res, next) {
+router.get('/', authorization, async function (req, res, next) {
     try {
         let records = await recordsController.getAllRecords(req.user._id);
 
@@ -53,7 +53,7 @@ router.get('/', async function (req, res, next) {
                 data = new Date(elem.date)
 
                 return data.getDate() == day &&
-                    data.getMonth() == month - 1 &&
+                    data.getMonth() == month &&
                     data.getFullYear() == year
             }
             ));
@@ -61,16 +61,17 @@ router.get('/', async function (req, res, next) {
 
         res.json(records);
     } catch (error) {
+        
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
-}); */
+});
 
-router.post('/', async function (req, res, next) {
+router.post('/', authorization, async function (req, res, next) {
     try {
         let { record } = req.body;
         if (!record) return res.status(406).json({ error: 'Datos faltantes', description: 'No se recibieron datos para guardar' });
 
-        record.user = "618b03e7c8af93f7b59ef372";
+        record.user = req.user._id;
 
         let saved = await recordsController.addNewRecord(record);
         if (!saved.insertedId) return res.status(500).json({ error: 'Error' })
@@ -132,13 +133,14 @@ async function authorization(req, res, next) {
     if (req.headers["authorization"]) {
         let token = jwt.decode(req.headers["authorization"].replace("Bearer ", ""))
         let user = await usersController.getUserById(token._id);
-        if (!user) {
+        if (!user) {            
             res.status(401).json({})
         } else {
             req.user = user;
             next();
         }
-    } else {
+        
+    } else {        
         res.status(401).json({})
     }
 }
