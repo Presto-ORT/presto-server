@@ -27,6 +27,8 @@ async function getRecordById(id) {
 async function addNewRecord(newRecord) {
     const connectiondb = await conn.getConnection();
 
+    newRecord.user = new ObjectId(newRecord.user)
+
     const record = await connectiondb
         .db(DATABASE)
         .collection(RECORDS)
