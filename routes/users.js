@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
 const usersController = require('../controllers/usersController');
 
 
@@ -56,6 +57,33 @@ router.post('/login', async function (req, res, next) {
 
     res.json(user);
   } catch (error) {
+    res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
+  }
+});
+
+router.post('/login/google', async function (req, res, next) {
+  try {
+    let { accessToken } = req.body;
+
+    let response = await axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`)
+
+    let googleUser = response.data;
+
+    let user = await usersController.getUserByGoogleId(googleUser.id);
+
+    if (!user) {
+      let saved = await usersController.addNewUser({ name: googleUser.name, email: googleUser.email, googleId: googleUser.id });
+      if (!saved.insertedId) return res.status(500).json({ error: 'Error' });
+      const token = jwt.sign({ _id: saved.insertedId }, process.env.SECRET, {});
+      return res.status(201).json({ _id: saved.insertedId, name: googleUser.name, email: googleUser.email, accessToken: token });
+    }
+
+    const token = jwt.sign({ _id: user._id }, process.env.SECRET, {});
+    user.accessToken = token;
+
+    res.json(user);
+  } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
   }
 });

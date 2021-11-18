@@ -23,6 +23,16 @@ async function getUserByEmail(email) {
     return user;
 }
 
+async function getUserByGoogleId(id) {
+    const connectiondb = await conn.getConnection();
+    const user = await connectiondb
+        .db(DATABASE)
+        .collection(COLLECTION)
+        .findOne({ "googleId": id })
+
+    return user;
+}
+
 async function addNewUser(user) {
     const connectiondb = await conn.getConnection();
     const inserted = await connectiondb
@@ -33,4 +43,4 @@ async function addNewUser(user) {
     return inserted;
 }
 
-module.exports = { getUserById, getUserByEmail, addNewUser };
+module.exports = { getUserById, getUserByEmail, getUserByGoogleId, addNewUser };
