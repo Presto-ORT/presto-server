@@ -3,10 +3,10 @@
 ## Listados de endpoints
 
 ### Manejo de usuarios
-| Method  | Endpoint |
-| ------------- |:-------------:|
-| GET      | /users     |
-| POST      | /users     |
+| Method  | Endpoint | Authorization |
+| :-------------: | :-------------: | :--------------: |
+| GET      | /users     | ❌ |
+| POST      | /users     | ❌ |
 
 #### Uso de endpoints
 
@@ -22,29 +22,29 @@ Retorna un objeto usuario con el siguiente formato:
 
 ### Manejo de registros
 
-| Method  | Endpoint |
-| ------------- |:-------------:|
-| GET      | /records     |
-| POST      | /records     |
+| Method  | Endpoint | Authorization |
+| :-------------: | :-------------: | :--------------: |
+| GET      | /records     | ✅ |
+| POST      | /records     | ✅ |
 
 #### Uso de endpoints
 
 
 ### Manejo de categorias
 
-| Method  | Endpoint |
-| ------------- |:-------------:|
-| GET      | /categories     |
-| POST      | /categories     |
+| Method  | Endpoint | Authorization |
+| :-------------: | :-------------: | :--------------: |
+| GET      | /categories     | ❌ |
+| POST      | /categories     | ❌ |
 
 #### Uso de endpoints
 
 
 ### Manejo de reportes
 
-| Method  | Endpoint |
-| ------------- |:-------------:|
-| GET      | /reports     |
-| POST      | /reports     |
+| Method  | Endpoint | Authorization |
+| :-------------: | :-------------: | :--------------: |
+| GET      | /reports     | ✅ |
+| POST      | /reports     | ✅ |
 
 #### Uso de endpoints
