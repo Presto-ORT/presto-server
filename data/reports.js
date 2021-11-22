@@ -13,7 +13,8 @@ async function getReport(id) {
             [
                 { '$match': { 'user': new ObjectId(id) } },
                 { '$group': { '_id': '$category', 'total': { '$sum': '$amount' } } },
-                { '$project': { '_id': false, 'category': '$_id', 'total': true } }
+                { '$project': { '_id': false, 'category': '$_id', 'total': true } },
+                { '$sort': { 'total': -1 } }
             ]
         ).toArray();
 
