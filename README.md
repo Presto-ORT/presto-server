@@ -11,48 +11,61 @@ Presto es una aplicación para gestionar el presupuesto personal y del hogar. Pe
 ## Listados de endpoints
 
 ### Manejo de usuarios
-| Method  | Endpoint | Authorization |
-| :-------------: | :-------------: | :--------------: |
-| GET      | /users     | ❌ |
-| POST      | /users     | ❌ |
-
-#### Uso de endpoints
-
-- [POST] /users
-Recibe un objeto usuario de la siguiente manera:
-```json
-{}
-```
-Retorna un objeto usuario con el siguiente formato:
-```json
-{}
-```
+| Method  | Endpoint | Authorization | Body | Response |
+| :-------------: | ------------- | :--------------: | :--------------: | :--------------: |
+| POST      | /users/register     | ❌ | ```{name, email, password}``` | ```{_id, name, email, accessToken}``` |
+| POST      | /users/login     | ❌ |  ```{email, password}``` | ```{_id, name, email, accessToken}``` |
+| POST      | /users/login/google     | ❌ | ```{accessToken}``` | ```{_id, name, email, accessToken}``` |
 
 ### Manejo de registros
-
-| Method  | Endpoint | Authorization |
-| :-------------: | :-------------: | :--------------: |
-| GET      | /records     | ✅ |
-| POST      | /records     | ✅ |
-
-#### Uso de endpoints
-
+```js
+record: {
+    _id: ObjectId,
+    category: String,
+    subcategory: String,
+    description: String,
+    amount: double,
+    date: Date,
+    user: ObjectId,
+    dollar: boolean
+}
+```
+| Method  | Endpoint | Authorization | Body | Params | Query |  Response |
+| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
+| GET      | /records     | Bearer [token] | ❌ | ❌ | `?day=[number]&month=[number]&year=[number]` | `[record, ...]` |
+| GET      | /records/:id     | Bearer [token] | ❌  | `user id` | ❌ | `record` |
+| POST      | /records     | Bearer [token] | `{record}` | ❌ | ❌ | `Some text` |
+| PUT      | /records/:id     | Bearer [token] | `{record}`  | `user id` | ❌ | `{ }` |
+| DELETE      | /records/:id     | Bearer [token] | ❌  | `user id` | ❌ | `{ }` |
 
 ### Manejo de categorias
+```js
+category: {
+    _id: ObjectId,
+    title: String,
+    subcategory: Array,
+    icon: String,
+    color: String,
+}
 
-| Method  | Endpoint | Authorization |
-| :-------------: | :-------------: | :--------------: |
-| GET      | /categories     | ❌ |
-| POST      | /categories     | ❌ |
-
-#### Uso de endpoints
-
+subcategory: {
+    title: String,
+    icon: String,
+    description: String
+}
+```
+| Method  | Endpoint | Authorization | Body | Params | Query | Response |
+| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
+| GET | /categories | ❌ | ❌ | ❌ | ❌ | `[category, ...]` |
+| GET | /categories/:id | ❌ | ❌ | `category id` | ❌ | `category` |
 
 ### Manejo de reportes
-
-| Method  | Endpoint | Authorization |
-| :-------------: | :-------------: | :--------------: |
-| GET      | /reports     | ✅ |
-| POST      | /reports     | ✅ |
-
-#### Uso de endpoints
+```js
+report: {
+    category: String,
+    total: double
+}
+```
+| Method  | Endpoint | Authorization | Body | Params | Query | Response |
+| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
+| GET      | /reports     | Bearer [token] | ❌ | ❌ | ❌ | `[report, ...]` |
