@@ -6,7 +6,6 @@ const reportsController = require('../controllers/reportController');
 
 router.get('/', authorization, async function (req, res, next) {
     let report = await reportsController.getReport(req.user._id);
-    console.log(report);
 
     res.json(report);
 });
