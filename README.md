@@ -2,6 +2,7 @@
 
 Presto es una aplicación para gestionar el presupuesto personal y del hogar. Permite registrar gastos de manera diaria. Cada uno está compuesto por una categoría, una subcategoría y un importe. En el area de reportes se puede visualizar el gasto acumulado mensual a través de un gráfico de torta ordenado según las categorías.
 
+![alt text](https://cdn.britannica.com/s:1500x700,q:85/42/8142-004-4CD3860D/Boxer.jpg)
 
 ## Listados de endpoints
 
