@@ -2,7 +2,7 @@
 
 Presto es una aplicación para gestionar el presupuesto personal y del hogar. Permite registrar gastos de manera diaria. Cada uno está compuesto por una categoría, una subcategoría y un importe. En el area de reportes se puede visualizar el gasto acumulado mensual a través de un gráfico de torta ordenado según las categorías.
 
-![alt text](https://postimg.cc/8j5RzZwf][img]https://i.postimg.cc/8j5RzZwf/presto1.jpg) ![alt text](https://postimg.cc/DS41qm92][img]https://i.postimg.cc/DS41qm92/presto2.jpg) ![alt text](https://postimg.cc/jLFzwykg][img]https://i.postimg.cc/jLFzwykg/presto3.jpg)
+![alt text](https://i.postimg.cc/qMcjQY3w/presto1.jpg) ![alt text](https://i.postimg.cc/cLXTGnT8/presto2.jpg) ![alt text](https://i.postimg.cc/QdXSzbg3/presto3.jpg)
 
 ## Listados de endpoints
 
