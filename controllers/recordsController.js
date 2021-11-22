@@ -1,7 +1,28 @@
 const recordsDB = require('../data/records');
 
-const getAllRecords = (id) => {
-    return recordsDB.getAllRecords(id);
+const getAllRecords = async (id, date) => {
+    let records = await recordsDB.getAllRecords(id);
+
+    const { day, month, year } = date;
+
+    if (day && month && year) {
+        let filteredRecords = records.filter((record) => {
+
+            recordDate = new Date(record.date)
+
+            console.log(recordDate.getDate(), day, recordDate.getMonth(), month, recordDate.getFullYear(), year);
+
+            return recordDate.getDate() == day &&
+                recordDate.getMonth() == month &&
+                recordDate.getFullYear() == year
+        });
+
+        console.log(filteredRecords);
+
+        return filteredRecords
+    }
+
+    return records;
 };
 
 const getRecordById = (id) => {

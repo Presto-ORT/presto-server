@@ -40,28 +40,14 @@ const usersController = require('../controllers/usersController');
 ///     VERSION CORRECTA                    ////
 ////////////////////////////////////////////////
 
-router.get('/', authorization, async function (req, res, next) {
+router.get('/', async function (req, res, next) {
     try {
-        let records = await recordsController.getAllRecords(req.user._id);
-
         const { day, month, year } = req.query;
 
-        if (day && month && year) {
-
-            return res.json(records.filter((elem) => {
-
-                data = new Date(elem.date)
-
-                return data.getDate() == day &&
-                    data.getMonth() == month &&
-                    data.getFullYear() == year
-            }
-            ));
-        }
+        let records = await recordsController.getAllRecords(req.user._id, { day, month, year });
 
         res.json(records);
     } catch (error) {
-        
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
@@ -133,14 +119,14 @@ async function authorization(req, res, next) {
     if (req.headers["authorization"]) {
         let token = jwt.decode(req.headers["authorization"].replace("Bearer ", ""))
         let user = await usersController.getUserById(token._id);
-        if (!user) {            
+        if (!user) {
             res.status(401).json({})
         } else {
             req.user = user;
             next();
         }
-        
-    } else {        
+
+    } else {
         res.status(401).json({})
     }
 }
