@@ -6,11 +6,6 @@ const jwt = require('jsonwebtoken');
 const axios = require('axios');
 const usersController = require('../controllers/usersController');
 
-
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource');
-});
-
 router.post('/register', async function (req, res, next) {
   try {
     let { name, email, password } = req.body;
