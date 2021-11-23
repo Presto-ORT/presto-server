@@ -40,7 +40,7 @@ const usersController = require('../controllers/usersController');
 ///     VERSION CORRECTA                    ////
 ////////////////////////////////////////////////
 
-router.get('/', async function (req, res, next) {
+router.get('/', authorization, async function (req, res, next) {
     try {
         const { day, month, year } = req.query;
 
@@ -48,6 +48,7 @@ router.get('/', async function (req, res, next) {
 
         res.json(records);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: 'Error', description: 'Lo sentimos, ocurrio un error inesperado. Vuelva a intentar.' });
     }
 });
