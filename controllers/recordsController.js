@@ -10,14 +10,10 @@ const getAllRecords = async (id, date) => {
 
             recordDate = new Date(record.date)
 
-            console.log(recordDate.getDate(), day, recordDate.getMonth(), month, recordDate.getFullYear(), year);
-
             return recordDate.getDate() == day &&
                 recordDate.getMonth() == month &&
                 recordDate.getFullYear() == year
         });
-
-        console.log(filteredRecords);
 
         return filteredRecords
     }
