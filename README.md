@@ -11,11 +11,11 @@ Presto es una aplicación para gestionar el presupuesto personal y del hogar. Pe
 ## Listados de endpoints
 
 ### Manejo de usuarios
-| Method  | Endpoint | Authorization | Body | Response |
-| :-------------: | ------------- | :--------------: | :--------------: | :--------------: |
-| POST      | /users/register     | ❌ | ```{name, email, password}``` | ```{_id, name, email, accessToken}``` |
-| POST      | /users/login     | ❌ |  ```{email, password}``` | ```{_id, name, email, accessToken}``` |
-| POST      | /users/login/google     | ❌ | ```{accessToken}``` | ```{_id, name, email, accessToken}``` |
+| Method | Endpoint            | Authorization |             Body              | Params | Query |               Response                |
+| :----: | ------------------- | :-----------: | :---------------------------: | :----: | :---: | :-----------------------------------: |
+|  POST  | /users/register     |       ❌       | ```{name, email, password}``` |   ❌    |   ❌   | ```{_id, name, email, accessToken}``` |
+|  POST  | /users/login        |       ❌       |    ```{email, password}```    |   ❌    |   ❌   | ```{_id, name, email, accessToken}``` |
+|  POST  | /users/login/google |       ❌       |      ```{accessToken}```      |   ❌    |   ❌   | ```{_id, name, email, accessToken}``` |
 
 ### Manejo de registros
 ```js
@@ -30,13 +30,13 @@ record: {
     dollar: boolean
 }
 ```
-| Method  | Endpoint | Authorization | Body | Params | Query |  Response |
-| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
-| GET      | /records     | Bearer [token] | ❌ | ❌ | `?day=[number]&month=[number]&year=[number]` | `[record, ...]` |
-| GET      | /records/:id     | Bearer [token] | ❌  | `user id` | ❌ | `record` |
-| POST      | /records     | Bearer [token] | `{record}` | ❌ | ❌ | `Some text` |
-| PUT      | /records/:id     | Bearer [token] | `{record}`  | `user id` | ❌ | `{ }` |
-| DELETE      | /records/:id     | Bearer [token] | ❌  | `user id` | ❌ | `{ }` |
+| Method | Endpoint     | Authorization  |    Body    |  Params   |                    Query                     |    Response     |
+| :----: | ------------ | :------------: | :--------: | :-------: | :------------------------------------------: | :-------------: |
+|  GET   | /records     | Bearer [token] |     ❌      |     ❌     | `?day=[number]&month=[number]&year=[number]` | `[record, ...]` |
+|  GET   | /records/:id | Bearer [token] |     ❌      | `user id` |                      ❌                       |    `record`     |
+|  POST  | /records     | Bearer [token] | `{record}` |     ❌     |                      ❌                       |   `Some text`   |
+|  PUT   | /records/:id | Bearer [token] | `{record}` | `user id` |                      ❌                       |      `{ }`      |
+| DELETE | /records/:id | Bearer [token] |     ❌      | `user id` |                      ❌                       |      `{ }`      |
 
 ### Manejo de categorias
 ```js
@@ -54,10 +54,10 @@ subcategory: {
     description: String
 }
 ```
-| Method  | Endpoint | Authorization | Body | Params | Query | Response |
-| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
-| GET | /categories | ❌ | ❌ | ❌ | ❌ | `[category, ...]` |
-| GET | /categories/:id | ❌ | ❌ | `category id` | ❌ | `category` |
+| Method | Endpoint        | Authorization | Body  |    Params     | Query |     Response      |
+| :----: | --------------- | :-----------: | :---: | :-----------: | :---: | :---------------: |
+|  GET   | /categories     |       ❌       |   ❌   |       ❌       |   ❌   | `[category, ...]` |
+|  GET   | /categories/:id |       ❌       |   ❌   | `category id` |   ❌   |    `category`     |
 
 ### Manejo de reportes
 ```js
@@ -66,6 +66,6 @@ report: {
     total: double
 }
 ```
-| Method  | Endpoint | Authorization | Body | Params | Query | Response |
-| :-------------: | ------------- | :--------------: | :--------------: | :--------------: | :--------------: | :--------------: |
-| GET      | /reports     | Bearer [token] | ❌ | ❌ | ❌ | `[report, ...]` |
+| Method | Endpoint | Authorization  | Body  | Params | Query |    Response     |
+| :----: | -------- | :------------: | :---: | :----: | :---: | :-------------: |
+|  GET   | /reports | Bearer [token] |   ❌   |   ❌    |   ❌   | `[report, ...]` |
